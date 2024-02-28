@@ -1,0 +1,44 @@
+﻿@model Articolo
+
+<h2>Dettagli Articolo</h2>
+
+<div>
+    <h4>@Model.Nome</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Prezzo:
+        </dt>
+        <dd>
+            @Model.Prezzo.ToString("C")
+        </dd>
+        <dt>
+            Descrizione:
+        </dt>
+        <dd>
+            @Model.Descrizione
+        </dd>
+        <dt>
+            Immagine di copertina:
+        </dt>
+        <dd>
+            <img src="@Model.ImmagineCopertina" alt="Immagine di copertina" />
+        </dd>
+        <dt>
+            Immagine aggiuntiva 1:
+        </dt>
+        <dd>
+            <img src="@Model.ImmagineAggiuntiva1" alt="Immagine aggiuntiva 1" />
+        </dd>
+        <dt>
+            Immagine aggiuntiva 2:
+        </dt>
+        <dd>
+            <img src="@Model.ImmagineAggiuntiva2" alt="Immagine aggiuntiva 2" />
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modifica", "Modifica", new { id = Model.Id }) |
+    @Html.ActionLink("Torna alla lista", "Index")
+</p>

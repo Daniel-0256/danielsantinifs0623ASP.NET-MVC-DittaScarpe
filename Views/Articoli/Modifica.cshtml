@@ -1,0 +1,46 @@
+﻿@model Articolo
+
+<h2>Modifica Articolo</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Nome)
+        @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Nome)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Prezzo)
+        @Html.TextBoxFor(model => model.Prezzo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Prezzo)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Descrizione)
+        @Html.TextAreaFor(model => model.Descrizione, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Descrizione)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImmagineCopertina)
+        @Html.TextBoxFor(model => model.ImmagineCopertina, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImmagineAggiuntiva1)
+        @Html.TextBoxFor(model => model.ImmagineAggiuntiva1, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.ImmagineAggiuntiva2)
+        @Html.TextBoxFor(model => model.ImmagineAggiuntiva2, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Salva modifiche" class="btn btn-primary" />
+        @Html.ActionLink("Annulla", "Index", null, new { @class = "btn btn-default" })
+    </div>
+}

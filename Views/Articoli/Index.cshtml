@@ -1,0 +1,30 @@
+﻿@model List<Articolo>
+
+<h2>Elenco Articoli</h2>
+
+<p>
+    @Html.ActionLink("Crea Nuovo Articolo", "Crea")
+</p>
+
+<div class="row">
+    @foreach (var articolo in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+                <img class="card-img-top" src="@articolo.ImmagineCopertina" alt="Immagine di @articolo.Nome">
+                <div class="card-body">
+                    <h4 class="card-title">@articolo.Nome</h4>
+                    <p class="card-text">@articolo.Descrizione</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="@Url.Action("Dettagli", "Articoli", new { id = articolo.Id })" class="btn btn-sm btn-outline-secondary">Dettagli</a>
+                            <a href="@Url.Action("Modifica", "Articoli", new { id = articolo.Id })" class="btn btn-sm btn-outline-secondary">Modifica</a>
+                            <a href="@Url.Action("Elimina", "Articoli", new { id = articolo.Id })" class="btn btn-sm btn-outline-secondary">Elimina</a>
+                        </div>
+                        <small class="text-muted">@articolo.Prezzo.ToString("C")</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

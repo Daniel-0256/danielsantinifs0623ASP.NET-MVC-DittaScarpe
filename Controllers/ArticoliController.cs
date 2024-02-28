@@ -7,94 +7,96 @@ namespace DittaScarpe.Controllers
 {
     public class ArticoliController : Controller
     {
-        private readonly List<Articolo> _listaArticoli = new List<Articolo>(); // Simulazione di un repository
+        private static List<Articolo> _articoli = new List<Articolo>();
 
-        // GET: Articoli
         public IActionResult Index()
         {
-            return View(_listaArticoli);
+            return View(_articoli);
         }
 
-        // GET: Articoli/Dettaglio/5
         public IActionResult Dettagli(int id)
         {
-            var articolo = _listaArticoli.FirstOrDefault(a => a.Id == id);
+            var articolo = _articoli.FirstOrDefault(a => a.Id == id);
             if (articolo == null)
+            {
                 return NotFound();
-
+            }
             return View(articolo);
         }
 
-        // GET: Articoli/Nuovo
         public IActionResult Crea()
         {
             return View();
         }
 
-        // POST: Articoli/Nuovo
         [HttpPost]
-        public IActionResult Crea(Articolo articolo)
+        public ActionResult SalvaArticolo(Articolo nuovoArticolo)
         {
-            if (!ModelState.IsValid)
-                return View(articolo);
+            if (ModelState.IsValid)
+            {
+                _articoli.Add(nuovoArticolo);
 
-            articolo.Id = _listaArticoli.Count + 1; // Simulazione di generazione ID
-            _listaArticoli.Add(articolo); // Simulazione di aggiunta all'elenco
+                TempData["Messaggio"] = "L'articolo è stato salvato con successo!";
+                return RedirectToAction("Index");
+            }
 
-            return RedirectToAction("Index");
+            return View("Crea", nuovoArticolo);
         }
 
-        // GET: Articoli/Modifica/5
         public IActionResult Modifica(int id)
         {
-            var articolo = _listaArticoli.FirstOrDefault(a => a.Id == id);
+            var articolo = _articoli.FirstOrDefault(a => a.Id == id);
             if (articolo == null)
+            {
                 return NotFound();
-
+            }
             return View(articolo);
         }
 
-        // POST: Articoli/Modifica/5
         [HttpPost]
-        public IActionResult Modifica(Articolo articolo)
+        public IActionResult Modifica(Articolo articoloModificato)
         {
-            if (!ModelState.IsValid)
-                return View(articolo);
+            if (ModelState.IsValid)
+            {
+                var articolo = _articoli.FirstOrDefault(a => a.Id == articoloModificato.Id);
+                if (articolo == null)
+                {
+                    return NotFound();
+                }
+                articolo.Nome = articoloModificato.Nome;
+                articolo.Prezzo = articoloModificato.Prezzo;
+                articolo.Descrizione = articoloModificato.Descrizione;
+                articolo.ImmagineCopertina = articoloModificato.ImmagineCopertina;
+                articolo.ImmagineAggiuntiva1 = articoloModificato.ImmagineAggiuntiva1;
+                articolo.ImmagineAggiuntiva2 = articoloModificato.ImmagineAggiuntiva2;
 
-            var articoloEsistente = _listaArticoli.FirstOrDefault(a => a.Id == articolo.Id);
-            if (articoloEsistente == null)
-                return NotFound();
-
-            articoloEsistente.Nome = articolo.Nome;
-            articoloEsistente.Prezzo = articolo.Prezzo;
-            articoloEsistente.Descrizione = articolo.Descrizione;
-            articoloEsistente.ImmagineCopertina = articolo.ImmagineCopertina;
-            articoloEsistente.ImmagineAggiuntiva1 = articolo.ImmagineAggiuntiva1;
-            articoloEsistente.ImmagineAggiuntiva2 = articolo.ImmagineAggiuntiva2;
-
-            return RedirectToAction("Index");
+                TempData["Messaggio"] = "L'articolo è stato modificato con successo!";
+                return RedirectToAction("Index");
+            }
+            return View(articoloModificato);
         }
 
-        // GET: Articoli/Elimina/5
         public IActionResult Elimina(int id)
         {
-            var articolo = _listaArticoli.FirstOrDefault(a => a.Id == id);
+            var articolo = _articoli.FirstOrDefault(a => a.Id == id);
             if (articolo == null)
+            {
                 return NotFound();
-
+            }
             return View(articolo);
         }
 
-        // POST: Articoli/Elimina/5
-        [HttpPost, ActionName("Elimina")]
-        public IActionResult EliminaConfermato(int id)
+
+        [HttpPost]
+        public IActionResult Elimina(Articolo articoloDaEliminare)
         {
-            var articolo = _listaArticoli.FirstOrDefault(a => a.Id == id);
+            var articolo = _articoli.FirstOrDefault(a => a.Id == articoloDaEliminare.Id);
             if (articolo == null)
+            {
                 return NotFound();
-
-            _listaArticoli.Remove(articolo); // Simulazione di rimozione dall'elenco
-
+            }
+            _articoli.Remove(articolo);
+            TempData["Messaggio"] = "L'articolo è stato eliminato con successo!";
             return RedirectToAction("Index");
         }
     }

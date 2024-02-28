@@ -1,46 +1,58 @@
 ﻿@model Articolo
 
-<h2>Crea Nuovo Articolo</h2>
+@{
+    ViewBag.Title = "Nuovo Articolo";
+}
 
-@using (Html.BeginForm())
+<h2>Nuovo Articolo</h2>
+
+@using (Html.BeginForm("SalvaArticolo", "Articoli", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
 
     <div class="form-group">
+        @Html.LabelFor(model => model.Id)
+        @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
         @Html.LabelFor(model => model.Nome)
-        @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Nome)
+        @Html.EditorFor(model => model.Nome, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Nome, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.Prezzo)
-        @Html.TextBoxFor(model => model.Prezzo, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Prezzo)
+        @Html.EditorFor(model => model.Prezzo, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Prezzo, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.Descrizione)
-        @Html.TextAreaFor(model => model.Descrizione, new { @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Descrizione)
+        @Html.EditorFor(model => model.Descrizione, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Descrizione, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.ImmagineCopertina)
-        @Html.TextBoxFor(model => model.ImmagineCopertina, new { @class = "form-control" })
+        @Html.EditorFor(model => model.ImmagineCopertina, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ImmagineCopertina, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.ImmagineAggiuntiva1)
-        @Html.TextBoxFor(model => model.ImmagineAggiuntiva1, new { @class = "form-control" })
+        @Html.EditorFor(model => model.ImmagineAggiuntiva1, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ImmagineAggiuntiva1, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.ImmagineAggiuntiva2)
-        @Html.TextBoxFor(model => model.ImmagineAggiuntiva2, new { @class = "form-control" })
+        @Html.EditorFor(model => model.ImmagineAggiuntiva2, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.ImmagineAggiuntiva2, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         <input type="submit" value="Salva" class="btn btn-primary" />
-        @Html.ActionLink("Annulla", "Index", null, new { @class = "btn btn-default" })
     </div>
 }

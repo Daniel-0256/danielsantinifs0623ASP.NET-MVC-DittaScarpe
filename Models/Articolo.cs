@@ -16,12 +16,15 @@ namespace DittaScarpe.Models
         public string Descrizione { get; set; }
 
         [Display(Name = "Immagine di copertina")]
+        [Url(ErrorMessage = "Inserisci un URL valido per l'immagine di copertina.")]
         public string ImmagineCopertina { get; set; }
 
         [Display(Name = "Immagine aggiuntiva 1")]
+        [Url(ErrorMessage = "Inserisci un URL valido per l'immagine aggiuntiva 1.")]
         public string ImmagineAggiuntiva1 { get; set; }
 
         [Display(Name = "Immagine aggiuntiva 2")]
+        [Url(ErrorMessage = "Inserisci un URL valido per l'immagine aggiuntiva 2.")]
         public string ImmagineAggiuntiva2 { get; set; }
     }
 }

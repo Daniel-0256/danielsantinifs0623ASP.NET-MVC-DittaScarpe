@@ -4,27 +4,28 @@ namespace DittaScarpe.Models
 {
     public class Articolo
     {
+        [Key]
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Il nome dell'articolo è obbligatorio.")]
+        [Required]
         public string Nome { get; set; }
 
-        [Required(ErrorMessage = "Il prezzo dell'articolo è obbligatorio.")]
+        [Required]
         public decimal Prezzo { get; set; }
 
-        [Required(ErrorMessage = "La descrizione dell'articolo è obbligatoria.")]
+        [Required]
         public string Descrizione { get; set; }
 
         [Display(Name = "Immagine di copertina")]
-        [Url(ErrorMessage = "Inserisci un URL valido per l'immagine di copertina.")]
+        [Url]
         public string ImmagineCopertina { get; set; }
 
         [Display(Name = "Immagine aggiuntiva 1")]
-        [Url(ErrorMessage = "Inserisci un URL valido per l'immagine aggiuntiva 1.")]
+        [Url]
         public string ImmagineAggiuntiva1 { get; set; }
 
         [Display(Name = "Immagine aggiuntiva 2")]
-        [Url(ErrorMessage = "Inserisci un URL valido per l'immagine aggiuntiva 2.")]
+        [Url]
         public string ImmagineAggiuntiva2 { get; set; }
     }
 }

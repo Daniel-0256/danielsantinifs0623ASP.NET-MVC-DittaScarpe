@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace DittaScarpe
 {
     public class Program
@@ -8,6 +10,10 @@ namespace DittaScarpe
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Register ScarpaMondoContext with Dependency Injection Container
+            builder.Services.AddDbContext<DittaScarpeContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DittaScarpeContext")));
 
             var app = builder.Build();
 

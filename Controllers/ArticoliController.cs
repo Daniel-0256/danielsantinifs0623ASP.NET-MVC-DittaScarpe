@@ -7,16 +7,21 @@ namespace DittaScarpe.Controllers
 {
     public class ArticoliController : Controller
     {
-        private static List<Articolo> _articoli = new List<Articolo>();
+        private readonly DittaScarpeContext _context;
 
+        public ArticoliController(DittaScarpeContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
-            return View(_articoli);
+            var articoli = _context.Articoli.ToList();
+            return View(articoli);
         }
 
         public IActionResult Dettagli(int id)
         {
-            var articolo = _articoli.FirstOrDefault(a => a.Id == id);
+            var articolo = _context.Articoli.FirstOrDefault(a => a.Id == id);
             if (articolo == null)
             {
                 return NotFound();
@@ -30,11 +35,12 @@ namespace DittaScarpe.Controllers
         }
 
         [HttpPost]
-        public ActionResult SalvaArticolo(Articolo nuovoArticolo)
+        public async Task<IActionResult> SalvaArticolo(Articolo nuovoArticolo)
         {
             if (ModelState.IsValid)
             {
-                _articoli.Add(nuovoArticolo);
+                _context.Add(nuovoArticolo);
+                await _context.SaveChangesAsync();
 
                 TempData["Messaggio"] = "L'articolo è stato salvato con successo!";
                 return RedirectToAction("Index");
@@ -45,7 +51,7 @@ namespace DittaScarpe.Controllers
 
         public IActionResult Modifica(int id)
         {
-            var articolo = _articoli.FirstOrDefault(a => a.Id == id);
+            var articolo = _context.Articoli.FirstOrDefault(a => a.Id == id);
             if (articolo == null)
             {
                 return NotFound();
@@ -54,21 +60,12 @@ namespace DittaScarpe.Controllers
         }
 
         [HttpPost]
-        public IActionResult Modifica(Articolo articoloModificato)
+        public async Task<IActionResult> Modifica(Articolo articoloModificato)
         {
             if (ModelState.IsValid)
             {
-                var articolo = _articoli.FirstOrDefault(a => a.Id == articoloModificato.Id);
-                if (articolo == null)
-                {
-                    return NotFound();
-                }
-                articolo.Nome = articoloModificato.Nome;
-                articolo.Prezzo = articoloModificato.Prezzo;
-                articolo.Descrizione = articoloModificato.Descrizione;
-                articolo.ImmagineCopertina = articoloModificato.ImmagineCopertina;
-                articolo.ImmagineAggiuntiva1 = articoloModificato.ImmagineAggiuntiva1;
-                articolo.ImmagineAggiuntiva2 = articoloModificato.ImmagineAggiuntiva2;
+                _context.Update(articoloModificato);
+                await _context.SaveChangesAsync();
 
                 TempData["Messaggio"] = "L'articolo è stato modificato con successo!";
                 return RedirectToAction("Index");
@@ -78,7 +75,7 @@ namespace DittaScarpe.Controllers
 
         public IActionResult Elimina(int id)
         {
-            var articolo = _articoli.FirstOrDefault(a => a.Id == id);
+            var articolo = _context.Articoli.FirstOrDefault(a => a.Id == id);
             if (articolo == null)
             {
                 return NotFound();
@@ -88,14 +85,17 @@ namespace DittaScarpe.Controllers
 
 
         [HttpPost]
-        public IActionResult Elimina(Articolo articoloDaEliminare)
+        public async Task<IActionResult> ConfermaElimina(int id)
         {
-            var articolo = _articoli.FirstOrDefault(a => a.Id == articoloDaEliminare.Id);
+            var articolo = await _context.Articoli.FindAsync(id);
             if (articolo == null)
             {
                 return NotFound();
             }
-            _articoli.Remove(articolo);
+
+            _context.Articoli.Remove(articolo);
+            await _context.SaveChangesAsync();
+
             TempData["Messaggio"] = "L'articolo è stato eliminato con successo!";
             return RedirectToAction("Index");
         }
